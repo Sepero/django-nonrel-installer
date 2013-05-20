@@ -85,14 +85,14 @@ class ResourceHandler(object):
 		Options:
 			--clean   Clean/erase all django files to prepare for reinstall.
 			--master
-			--dev or --develop
+			--dev13
 			--dev14
 		"""
 		
 		self.install_dir = "django-nonrel"
 		if len(argv) == 1:
-			print ("Warning: Future releases will require option" 
-					" --master to install master branches")
+			sys.stderr.write("Warning: Future releases will require option" 
+					" --master to install master branches\n")
 			arg1 = "--master"
 		else:
 			arg1 = argv[1]
@@ -103,7 +103,7 @@ class ResourceHandler(object):
 		
 		if arg1 == "--master":
 			print " Master 1.3 branches selected"
-		elif arg1 == "--dev":
+		elif arg1 == "--dev13" or arg1 == "--dev" or arg1 == "--develop":
 			print " Development 1.3 branches selected"
 		elif arg1 == "--dev14":
 			print " Development 1.4 branches selected"
@@ -250,7 +250,7 @@ def get_lib_urls(branch_arg):
 		"http://github.com/django-nonrel/django-testapp/tarball/testapp-1.3",
 		"http://github.com/django-nonrel/nonrel-search/tarball/master",
 		"http://github.com/django-nonrel/django-permission-backend-nonrel/tarball/master",
-		"http://github.com/django-nonrel/django/tarball/master",
+		"http://github.com/django-nonrel/django-nonrel/tarball/master",
 	]
 	urls_13 = [
 		"http://github.com/django-nonrel/djangotoolbox/tarball/toolbox-1.3",
@@ -280,28 +280,27 @@ def get_lib_urls(branch_arg):
 		"http://github.com/django-nonrel/django/tarball/nonrel-1.5-beta",
 	]
 	lib_dirs = [
+		"autoload",
 		"djangotoolbox",
 		"djangoappengine",
 		"dbindexer",
 		"",
 		"search",
 		"permission_backend_nonrel",
-		"autoload",
 		"django",
 	]
 	
-	return_list = []
-	if branch_arg == "master":
-		return_list = [ [url] for url in urls_master ]
-	elif branch_arg == "dev":
-		return_list = [ [url] for url in urls_13 ]
-	elif branch_arg == "dev14":
-		return_list = [ [url] for url in urls_14 ]
-	elif branch_arg == "dev15":
-		return_list = [ [url] for url in urls_15 ]
+	# This same library goes with all branches.
+	return_list = [[ "http://bitbucket.org/twanschik/django-autoload/get/default.tar.gz" ]]
 	
-	# Add this same library to all branches.
-	return_list.append([ "http://bitbucket.org/twanschik/django-autoload/get/default.tar.gz" ])
+	if branch_arg == "master":
+		return_list += [ [url] for url in urls_master ]
+	elif branch_arg == "dev":
+		return_list += [ [url] for url in urls_13 ]
+	elif branch_arg == "dev14":
+		return_list += [ [url] for url in urls_14 ]
+	elif branch_arg == "dev15":
+		return_list += [ [url] for url in urls_15 ]
 	
 	# Append the directory location of each library with it's URL.
 	# Resulting in a list like this: [ [ url, dir ], [ url, dir ], ... ]
