@@ -37,8 +37,9 @@ class ResourceHandler(object):
 	"""
 	def _exit_error(self, code, option=None, err=None):
 		"""
-		Error information is kept here for the purposes of easier management and possibly language translation.
-		Returns nothing.	All calls exit the program, exit error status 128.
+		Error information is kept here for the purposes of easier management 
+		and possibly language translation.
+		Returns nothing. All calls exit the program, exit error status 128.
 		"""
 		error_codes = {
 		"unknownarg":
@@ -195,15 +196,15 @@ class ResourceHandler(object):
 					self._exit_error("movedir", path+" to "+fname, e)
 				return
 		else:
-			self._exit_error("notfound", fname) # This error should theoretically never occur.
+			self._exit_error("notfound", fname) # This is likely to indicate a problem in directory naming.
 	
 	def symlink(self, target, ln_name, ln_root):
 		"""
-		Create a symbolic link named	ln_root/ln_name	which points to the
+		Create a symbolic link named  ln_root/ln_name  which points to the
 		directory	../target/ln_name/
 		
-		If ln_name == "", then create a symbolic link named	ln_root/target
-		which points to the directory	../target/
+		If ln_name == "", then create a symbolic link named  ln_root/target
+		which points to the directory  ../target/
 		
 		If symbolic links aren't supported, then the directory
 		target/ln_name/	or	target/	will simply be moved into ln_root/
@@ -243,45 +244,42 @@ def get_lib_urls(branch_arg):
 	and the directory location of the library inside each gzip archive.
 	"""
 	urls_master = [
-		"http://github.com/django-nonrel/django-nonrel/tarball/master",
-		"http://github.com/django-nonrel/djangotoolbox/tarball/master",
-		"http://github.com/django-nonrel/djangoappengine/tarball/master",
-		"http://github.com/django-nonrel/django-dbindexer/tarball/master",
-		"http://github.com/django-nonrel/django-testapp/tarball/master",
+		"http://github.com/django-nonrel/djangotoolbox/tarball/toolbox-1.3",
+		"http://github.com/django-nonrel/djangoappengine/tarball/appengine-1.3",
+		"http://github.com/django-nonrel/django-dbindexer/tarball/dbindexer-1.3",
+		"http://github.com/django-nonrel/django-testapp/tarball/testapp-1.3",
 		"http://github.com/django-nonrel/nonrel-search/tarball/master",
 		"http://github.com/django-nonrel/django-permission-backend-nonrel/tarball/master",
+		"http://github.com/django-nonrel/django/tarball/master",
 	]
 	urls_13 = [
-		"http://github.com/django-nonrel/django-nonrel/tarball/develop",
-		"http://github.com/django-nonrel/djangotoolbox/tarball/develop",
-		"http://github.com/django-nonrel/djangoappengine/tarball/develop",
-		"http://github.com/django-nonrel/django-dbindexer/tarball/develop",
-		"http://github.com/django-nonrel/django-testapp/tarball/develop",
+		"http://github.com/django-nonrel/djangotoolbox/tarball/toolbox-1.3",
+		"http://github.com/django-nonrel/djangoappengine/tarball/appengine-1.3",
+		"http://github.com/django-nonrel/django-dbindexer/tarball/dbindexer-1.3",
+		"http://github.com/django-nonrel/django-testapp/tarball/testapp-1.3",
 		"http://github.com/django-nonrel/nonrel-search/tarball/develop",
 		"http://github.com/django-nonrel/django-permission-backend-nonrel/tarball/develop",
+		"http://github.com/django-nonrel/django/tarball/nonrel-1.3",
 	]
 	urls_14 = [
-		"http://github.com/django-nonrel/django-1.4/tarball/1.4-nonrel",
-		"http://github.com/django-nonrel/djangotoolbox/tarball/features/django-1.4",
-		"http://github.com/django-nonrel/djangoappengine/tarball/features/django-1.4",
-		"http://github.com/django-nonrel/django-dbindexer/tarball/feature/django-1.4",
-		#"http://github.com/django-nonrel/django-testapp/tarball/feature/django-1.4",
+		"http://github.com/django-nonrel/djangotoolbox/tarball/toolbox-1.4",
+		"http://github.com/django-nonrel/djangoappengine/tarball/appengine-1.4",
+		"http://github.com/django-nonrel/django-dbindexer/tarball/dbindexer-1.4",
 		"http://github.com/django-nonrel/django-testapp/tarball/testapp-1.4",
 		"http://github.com/django-nonrel/nonrel-search/tarball/develop",
 		"http://github.com/django-nonrel/django-permission-backend-nonrel/tarball/develop",
+		"http://github.com/django-nonrel/django/tarball/nonrel-1.4",
 	]
 	urls_15 = [
-		"http://github.com/django-nonrel/django-1.5/tarball/nonrel-1.5",
-		"http://github.com/django-nonrel/djangotoolbox/tarball/1.5",
-		"http://github.com/django-nonrel/djangoappengine/tarball/features/django-1.4",
-		"http://github.com/django-nonrel/django-dbindexer/tarball/feature/django-1.4",
-		#"http://github.com/django-nonrel/django-testapp/tarball/feature/django-1.4",
-		"http://github.com/django-nonrel/django-testapp/tarball/testapp-1.4",
+		"http://github.com/django-nonrel/djangotoolbox/tarball/toolbox-1.5-beta",
+		"http://github.com/django-nonrel/djangoappengine/tarball/appengine-1.5-beta",
+		"http://github.com/django-nonrel/django-dbindexer/tarball/dbindexer-1.5-beta",
+		"http://github.com/django-nonrel/django-testapp/tarball/testapp-1.5-beta",
 		"http://github.com/django-nonrel/nonrel-search/tarball/develop",
 		"http://github.com/django-nonrel/django-permission-backend-nonrel/tarball/develop",
+		"http://github.com/django-nonrel/django/tarball/nonrel-1.5-beta",
 	]
 	lib_dirs = [
-		"django",
 		"djangotoolbox",
 		"djangoappengine",
 		"dbindexer",
@@ -289,6 +287,7 @@ def get_lib_urls(branch_arg):
 		"search",
 		"permission_backend_nonrel",
 		"autoload",
+		"django",
 	]
 	
 	return_list = []
@@ -309,9 +308,12 @@ def get_lib_urls(branch_arg):
 	for i in xrange(8):
 		return_list[i].append(lib_dirs[i])
 	
-	# A special exception for master library directory location, djangoappengine.
-	if branch_arg == "master":
-		return_list[2][1] = ""
+	## A special exception for master library directory location, djangoappengine.
+	#if branch_arg == "master":
+		##print("removing appengine dir") # Debugging print statement.
+		#return_list[1][1] = ""
+	#else:
+		#print("not removing appengine dir")
 	
 	return return_list
 
