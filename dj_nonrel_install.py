@@ -19,7 +19,7 @@ import os, sys, shutil, urllib2, tarfile
 CONTACT=("sepero 111 @ gmail . com\n "
 			"http://bitbucket.org/Sepero/install-django-nonrel/issues/new\n"
 			"http://seperohacker.blogspot.com/2012/04/installing-django-nonrel-easily.html")
-VERSION="0.41"
+VERSION="0.42"
 
 # Presents the user with a choice between GAE and MongoDB install.
 def query_user(): # This function currently unused.
@@ -295,7 +295,7 @@ def get_lib_urls(branch_arg):
 	
 	if branch_arg == "master":
 		return_list += [ [url] for url in urls_master ]
-	elif branch_arg == "dev":
+	elif branch_arg == "dev13":
 		return_list += [ [url] for url in urls_13 ]
 	elif branch_arg == "dev14":
 		return_list += [ [url] for url in urls_14 ]
@@ -306,13 +306,6 @@ def get_lib_urls(branch_arg):
 	# Resulting in a list like this: [ [ url, dir ], [ url, dir ], ... ]
 	for i in xrange(8):
 		return_list[i].append(lib_dirs[i])
-	
-	## A special exception for master library directory location, djangoappengine.
-	#if branch_arg == "master":
-		##print("removing appengine dir") # Debugging print statement.
-		#return_list[1][1] = ""
-	#else:
-		#print("not removing appengine dir")
 	
 	return return_list
 

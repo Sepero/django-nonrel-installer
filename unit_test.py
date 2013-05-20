@@ -14,63 +14,57 @@ class MyTest(unittest.TestCase):
 			pass
 	
 	def test_master(self):
-		# Only grab the last 3 libraries in testing.
-		self.libs = get_lib_urls("dev")[-3:]
 		self.run_process("--master")
 	def test_13(self):
-		self.libs = get_lib_urls("dev")[-3:]
-		self.run_process("--dev")
+		self.run_process("--dev13")
 	def test_14(self):
-		self.libs = get_lib_urls("dev14")[-3:]
 		self.run_process("--dev14")
 	def test_15(self):
-		self.libs = get_lib_urls("dev15")[-3:]
-		self.run_process("--dev14")
+		self.run_process("--dev15")
 	
 	def run_process(self, branch):
-		self.rh = RH(["unittest", branch])
+		rh = RH(["unittest", branch])
 		
-		self.rh.create_install_dir(self.rh.install_dir)
+		libs = get_lib_urls(rh.branch_arg)[:6]
 		
-		for url in self.libs:
-			self.fnames.append(self.rh.download(url[0]))
-			
+		rh.create_install_dir(rh.install_dir)
+		
+		for url in libs:
+			self.fnames.append(rh.download(url[0]))
+		
 		for f in self.fnames:
 			self.assertTrue(os.path.lexists(f))
-	
+		
 		print "This should fail"
 		print "This should fail"
 		try:
 			for f in self.fnames:
-				self.rh.extract_file(f+"z") # This should fail.
+				rh.extract_file(f+"z") # This should fail.
 		except IOError, e:
 			pass
 		
 		for f in self.fnames:
-			self.rh.extract_file(f)
+			rh.extract_file(f)
 		
 		print "This should fail"
 		print "This should fail"
 		try:
 			for f in self.fnames:
-				self.rh.move_dir(f) # This should fail.
+				rh.move_dir(f) # This should fail.
 		except IOError, e:
 			pass
 		
 		self.fnames = [ f.split(".")[0] for f in self.fnames ]
 		for f in self.fnames:
-			self.rh.move_dir(f)
+			rh.move_dir(f)
 		
 		for i in xrange(len(self.fnames)):
-			self.rh.symlink(self.fnames[i], self.libs[i][1], "django-testapp")
+			rh.symlink(self.fnames[i], libs[i][1], "django-testapp")
 		
 		listing = os.listdir(".")
 		
 		self.assertTrue("django-testapp" in listing)
 		self.assertTrue("django-autoload" in listing)
-		
-		self.assertFalse(os.path.exists("djangoappengine"))
-		self.assertFalse(os.path.exists("django-nonrel"))
 	
 	def tearDown(self):
 		os.chdir("..")
