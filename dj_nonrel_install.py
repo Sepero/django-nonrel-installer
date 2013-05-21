@@ -4,9 +4,10 @@
 Installs the base system for django-nonrel
 
 Syntax:
-python dj_nonrel_install.py --master # Installs master branches.
-python dj_nonrel_install.py --dev    # Installs development branches.
+python dj_nonrel_install.py --master # Installs master branches (Will be removed).
+python dj_nonrel_install.py --dev13  # Installs 1.3 development branches.
 python dj_nonrel_install.py --dev14  # Installs 1.4 development branches.
+python dj_nonrel_install.py --dev15  # Installs 1.5 development branches.
 python dj_nonrel_install.py --clean  # Deletes all created files.
 
 license: BSD 2-Clause License, 2012, Sepero
@@ -19,7 +20,7 @@ import os, sys, shutil, urllib2, tarfile
 CONTACT=("sepero 111 @ gmail . com\n "
 			"http://bitbucket.org/Sepero/install-django-nonrel/issues/new\n"
 			"http://seperohacker.blogspot.com/2012/04/installing-django-nonrel-easily.html")
-VERSION="0.42"
+VERSION="0.43"
 
 # Presents the user with a choice between GAE and MongoDB install.
 def query_user(): # This function currently unused.
@@ -43,7 +44,7 @@ class ResourceHandler(object):
 		"""
 		error_codes = {
 		"unknownarg":
-			"Unknown argument: %s\n--master --dev --dev14 --clean" % option,
+			"Unknown argument: %s\n--dev13 --dev14 --dev15 --clean" % option,
 		"mkdir":
 			"Failed to create sub dir: %s\n(Run with option --clean to remove an old install)" % option,
 		"fileopen":
@@ -84,15 +85,15 @@ class ResourceHandler(object):
 		which indicates the branch of django-nonrel to install.
 		Options:
 			--clean   Clean/erase all django files to prepare for reinstall.
-			--master
-			--dev13
-			--dev14
+			--master  Installs master branches (Will be removed).
+			--dev13   Installs 1.3 development branches.
+			--dev14   Installs 1.4 development branches.
+			--dev15   Installs 1.5 development branches.
 		"""
 		
 		self.install_dir = "django-nonrel"
 		if len(argv) == 1:
-			sys.stderr.write("Warning: Future releases will require option" 
-					" --master to install master branches\n")
+			sys.stderr.write("Warning: Defaulting to option --master. Future default will be --dev15.\n")
 			arg1 = "--master"
 		else:
 			arg1 = argv[1]
@@ -102,6 +103,9 @@ class ResourceHandler(object):
 			sys.exit()
 		
 		if arg1 == "--master":
+			sys.stderr.write(
+					"Warning: Option --master is no longer supported and will "
+					"be removed in future releases.\n")
 			print " Master 1.3 branches selected"
 		elif arg1 == "--dev13" or arg1 == "--dev" or arg1 == "--develop":
 			print " Development 1.3 branches selected"
@@ -160,7 +164,7 @@ class ResourceHandler(object):
 				
 			# Print status of current download.
 			sys.stdout.write("Downloading: %25s %10d Kbytes downloaded\r" %
-											 (f.name, (loaded_bytes / 1024 or 1)))
+					(f.name, (loaded_bytes / 1024 or 1)))
 			sys.stdout.flush()
 	
 	def extract_file(self, fname):
