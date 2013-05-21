@@ -112,12 +112,11 @@ class ResourceHandler(object):
 		elif arg1 == "--dev14":
 			print " Development 1.4 branches selected"
 		elif arg1 == "--dev15":
-			# 1.5 branches do not currently function correctly.
 			print " Development 1.5 branches selected"
 		else:
 			self._exit_error("unknownarg", arg1)
 		
-		self.branch_arg = arg1[2:] # Cut off the "--".
+		self.branch_arg = arg1
 	
 	def create_install_dir(self, dir):
 		try:
@@ -297,13 +296,13 @@ def get_lib_urls(branch_arg):
 	# This same library goes with all branches.
 	return_list = [[ "http://bitbucket.org/twanschik/django-autoload/get/default.tar.gz" ]]
 	
-	if branch_arg == "master":
+	if branch_arg == "--master":
 		return_list += [ [url] for url in urls_master ]
-	elif branch_arg == "dev13":
+	elif branch_arg == "--dev13":
 		return_list += [ [url] for url in urls_13 ]
-	elif branch_arg == "dev14":
+	elif branch_arg == "--dev14":
 		return_list += [ [url] for url in urls_14 ]
-	elif branch_arg == "dev15":
+	elif branch_arg == "--dev15":
 		return_list += [ [url] for url in urls_15 ]
 	
 	# Append the directory location of each library with it's URL.
