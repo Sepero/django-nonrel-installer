@@ -17,7 +17,7 @@ I prefer GNU, but it would seem excessive for this small program.
 
 import os, sys, shutil, urllib2, tarfile
 
-CONTACT=("sepero 111 @ gmail . com\n "
+CONTACT=("sepero 111 @ gmx . com\n "
 			"http://bitbucket.org/Sepero/install-django-nonrel/issues/new\n"
 			"http://seperohacker.blogspot.com/2012/04/installing-django-nonrel-easily.html")
 VERSION="0.43"
